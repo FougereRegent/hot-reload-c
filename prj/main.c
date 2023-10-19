@@ -1,36 +1,49 @@
+#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
+#include <raylib.h>
+
+#define TRUE 1
+#define FALSE 0
+#define WINDOW_NAME "Hot Reload"
+
+typedef unsigned char boolean;
 /*Déclaration de tes données*/
 typedef struct {
-  int age;
-  char *name;
+  boolean init_state;
 } data;
+
+/*Déclaration des constante*/
+
+static const int screenWidth = 800;
+static const int screenHeight = 800;
+
+static void init() {
+  InitWindow(screenWidth, screenHeight, WINDOW_NAME);
+  SetTargetFPS(60);
+}
 
 void *main_module(void *d) {
   data *saved_data;
 
   /*Initialisation des données*/
   if (d == NULL) {
-    saved_data = malloc(sizeof(data));
-    saved_data->name = malloc(sizeof(char));
-    saved_data->age = 11;
-
-    strcpy(saved_data->name, "Damien");
+    saved_data = (data *)malloc(sizeof(data));
+    saved_data->init_state = false;
   } else {
     saved_data = (data *)d;
   }
 
-  if (strcmp(saved_data->name, "Damien") == 0) {
-    saved_data->age = 55;
-    strcpy(saved_data->name, "John");
-  } else {
-    strcpy(saved_data->name, "Damien");
+  if (!saved_data->init_state) {
+    init();
+    saved_data->init_state = TRUE;
   }
 
-  printf("Test 5\n");
-  printf("Name : %s\tAge: %d\n", saved_data->name, saved_data->age);
+  while (!WindowShouldClose()) {
+  }
 
+  CloseWindow();
   return saved_data;
 }
