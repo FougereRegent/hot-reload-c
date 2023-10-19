@@ -18,7 +18,7 @@
 
 typedef unsigned char boolean;
 
-void *(*plug_hello)(void *d);
+void *(*plug_function)(void *d);
 
 static void *load_module(char *name_module);
 static void *load_function(void *lib, char *name_function);
@@ -42,9 +42,9 @@ int main(int argc, char **argv) {
     }
 
     void *handle = load_module("libmain.so");
-    plug_hello = load_function(handle, "main_module");
+    plug_function = load_function(handle, "main_module");
 
-    result = plug_hello(result);
+    result = plug_function(result);
 
     getchar();
     CLOSE_DL(handle);

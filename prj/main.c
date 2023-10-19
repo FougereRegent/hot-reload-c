@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+/*Déclaration de tes données*/
 typedef struct {
   int age;
   char *name;
@@ -10,6 +11,7 @@ typedef struct {
 void *main_module(void *d) {
   data *saved_data;
 
+  /*Initialisation des données*/
   if (d == NULL) {
     saved_data = malloc(sizeof(data));
     saved_data->name = malloc(sizeof(char));
